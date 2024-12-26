@@ -1,0 +1,107 @@
+http:
+  port: 7000
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  fetchPizzasApi:
+    host: localhost
+    paths: '/fetchPizzas/*'
+  fetchIngredientsApi:
+    host: localhost
+    paths: '/fetchIngredients/*'
+  fetchCartApi:
+    host: localhost
+    paths: '/fetchCart/*'
+  insertToCartApi:
+    host: localhost
+    paths: '/insertToCart/*'
+  deleteFromCartApi:
+    host: localhost
+    paths: '/deleteFromCart/*'
+  updateCartApi:
+    host: localhost
+    paths: '/updateCart/*'
+serviceEndpoints:
+  fetchPizzasService:
+    url: 'http://localhost:7001/'
+  fetchIngredientsService:
+    url: 'http://localhost:7002/'
+  fetchCartService:
+    url: 'http://localhost:7003/'
+  insertToCartService:
+    url: 'http://localhost:7004/'
+  deleteFromCartService:
+    url: 'http://localhost:7005/'
+  updateCartService:
+    url: 'http://localhost:7006/'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  fetchPizzasPipeline:
+    apiEndpoints:
+      - fetchPizzasApi
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: fetchPizzasService 
+              changeOrigin: true
+  fetchIngredientsPipeline:
+    apiEndpoints:
+      - fetchIngredientsApi
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: fetchIngredientsService 
+              changeOrigin: true
+  fetchCartPipeline:
+    apiEndpoints:
+      - fetchCartApi
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: fetchCartService 
+              changeOrigin: true
+  insertToCartPipeline:
+    apiEndpoints:
+      - insertToCartApi
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: insertToCartService 
+              changeOrigin: true
+  deleteFromCartPipeline:
+    apiEndpoints:
+      - deleteFromCartApi
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: deleteFromCartService 
+              changeOrigin: true
+  updateCartPipeline:
+    apiEndpoints:
+      - updateCartApi
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: updateCartService 
+              changeOrigin: true
